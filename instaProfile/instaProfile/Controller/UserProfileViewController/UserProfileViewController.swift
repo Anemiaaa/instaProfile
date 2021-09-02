@@ -38,7 +38,7 @@ class UserProfileViewController: UIViewController {
     /// sets the value to the class variables
     
     private func setVariables() {
-        user = UsersDataBase.getUsersArray()?[0]
+        user = UsersDataBase.getUser(index: 0, completion: nil)
         getCellData = { [weak self] index in
             var uiImageArray: [UIImage] = []
                 
