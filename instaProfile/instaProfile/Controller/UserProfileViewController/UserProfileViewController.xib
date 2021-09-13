@@ -47,13 +47,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="90.5" height="128"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4GP-Ry-aHc">
-                                            <rect key="frame" x="0.0" y="0.0" width="90.5" height="23"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="90.5" height="104"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Публикаций" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duO-rW-g1T">
-                                            <rect key="frame" x="0.0" y="29" width="90.5" height="99"/>
+                                            <rect key="frame" x="0.0" y="110" width="90.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -101,13 +101,13 @@
                                     <rect key="frame" x="185.5" y="0.0" width="90.5" height="128"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRO-Xb-jl2">
-                                            <rect key="frame" x="0.0" y="0.0" width="90.5" height="104"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="90.5" height="23"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Подписки" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLk-JV-9q0">
-                                            <rect key="frame" x="0.0" y="110" width="90.5" height="18"/>
+                                            <rect key="frame" x="0.0" y="29" width="90.5" height="99"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

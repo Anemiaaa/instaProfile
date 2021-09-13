@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailPhotoViewController" customModule="instaProfile" customModuleProvider="target">
             <connections>
-                <outlet property="detailImage" destination="UUT-NP-h1q" id="nuL-nW-vmv"/>
+                <outlet property="tableView" destination="kGd-zW-nat" id="IKh-ym-PEX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,20 +19,30 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UUT-NP-h1q">
-                    <rect key="frame" x="0.0" y="229" width="414" height="448"/>
-                </imageView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kGd-zW-nat">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="UUT-NP-h1q" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9pj-2P-h0m"/>
-                <constraint firstItem="UUT-NP-h1q" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.5" id="MXe-wq-Bi6"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UUT-NP-h1q" secondAttribute="trailing" id="bQV-IK-2Rv"/>
-                <constraint firstItem="UUT-NP-h1q" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="jBF-MI-QBR"/>
+                <constraint firstAttribute="trailing" secondItem="kGd-zW-nat" secondAttribute="trailing" id="0VA-11-JY6"/>
+                <constraint firstAttribute="bottom" secondItem="kGd-zW-nat" secondAttribute="bottom" id="Ihd-KR-ED5"/>
+                <constraint firstItem="kGd-zW-nat" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gie-mg-V2M"/>
+                <constraint firstItem="kGd-zW-nat" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xdT-Kp-wEt"/>
             </constraints>
-            <point key="canvasLocation" x="132" y="110"/>
+            <point key="canvasLocation" x="131.8840579710145" y="109.82142857142857"/>
         </view>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Il7-Yi-cyA">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Il7-Yi-cyA" id="qsi-9u-5yR">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="1047" y="-49"/>
+        </tableViewCell>
     </objects>
     <resources>
         <systemColor name="systemBackgroundColor">

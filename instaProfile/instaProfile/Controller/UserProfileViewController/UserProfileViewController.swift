@@ -16,8 +16,10 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var subscriptionsCountLabel: UILabel!
     @IBOutlet weak var userLogin: UILabel!
     
-    let countCells = 3
-    let offset: CGFloat = 2.0
+    struct CellsDefault {
+       static let countCells = 3
+       static let offset: CGFloat = 2.0
+    }
     
     var user: User?
     var getCellData: ((_ indexPath: Int) -> UIImage)?
@@ -38,20 +40,25 @@ class UserProfileViewController: UIViewController {
     /// sets the value to the class variables
     
     private func setVariables() {
-        user = UsersDataBase.getUser(index: 0, completion: nil)
-        getCellData = { [weak self] index in
-            var uiImageArray: [UIImage] = []
-                
-            self?.user?.publications?.forEach({ str in
-                    if let image = UIImage(named: str) {
-                        uiImageArray.append(image)
-                    }
-                })
+        DataManager.shared.getUser(index: 0) { [weak self] user in
+            guard let self = self else { return }
             
-            if uiImageArray.count > 0 {
-                return uiImageArray[index]
+            self.user = user
+            
+            self.getCellData = { index in
+                var uiImageArray: [UIImage] = []
+                    
+                user.publications.forEach({ post in
+                    if let image = UIImage(named: post.image) {
+                            uiImageArray.append(image)
+                        }
+                    })
+                
+                if uiImageArray.count > 0 {
+                    return uiImageArray[index]
+                }
+                return UIImage()
             }
-            return UIImage()
         }
     }
     
@@ -59,10 +66,10 @@ class UserProfileViewController: UIViewController {
     
     private func setFields() {
         if let user = user {
-            userImage.image = UIImage(named: user.avatar ?? "defaultAvatar")
+            userImage.image = UIImage(named: user.avatar)
             userImage.layer.cornerRadius = userImage.frame.width / 2
             userImage.clipsToBounds = true
-            publicationsCountLabel.text = String(user.publications?.count ?? 0)
+            publicationsCountLabel.text = String(user.publications.count)
             subscribersCountLabel.text = String(user.followers)
             subscriptionsCountLabel.text = String(user.subscribes)
             userLogin.text = user.name
@@ -76,7 +83,7 @@ extension UserProfileViewController: UICollectionViewDelegate, UICollectionViewD
     //MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return user?.publications?.count ?? 0
+        return user?.publications.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,18 +102,20 @@ extension UserProfileViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let frameCollectionView = collectionView.frame
-        let widthCell = frameCollectionView.width / CGFloat(countCells)
-        let spacing = CGFloat(countCells + 1) * offset / CGFloat(countCells)
+        let widthCell = frameCollectionView.width / CGFloat(CellsDefault.countCells)
+        let spacing = CGFloat(CellsDefault.countCells + 1) * CellsDefault.offset / CGFloat(CellsDefault.countCells)
         
-        return CGSize(width: widthCell - spacing, height: widthCell - (offset * 2))
+        return CGSize(width: widthCell - spacing, height: widthCell - (CellsDefault.offset * 2))
     }
     
     //MARK: - UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailPhotoController = DetailPhotoViewController.loadFromNib()
-        
-        detailPhotoController.config(image: getCellData?(indexPath.row))
-        present(detailPhotoController, animated: true, completion: nil)
+        if let user = user {
+            let detailPhotoController = DetailPhotoViewController.loadFromNib()
+            
+            detailPhotoController.setFields(userName: user.name, userId: user.id, userAvatar: user.avatar, indexPath: indexPath)
+            navigationController?.pushViewController(detailPhotoController, animated: true)
+        }
     }
 }

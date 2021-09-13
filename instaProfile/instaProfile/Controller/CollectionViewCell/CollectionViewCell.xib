@@ -36,7 +36,7 @@
             <connections>
                 <outlet property="cellImage" destination="GTA-js-tpi" id="s9K-Ot-zel"/>
             </connections>
-            <point key="canvasLocation" x="182.60869565217394" y="155.35714285714286"/>
+            <point key="canvasLocation" x="158" y="137"/>
         </collectionViewCell>
     </objects>
 </document>

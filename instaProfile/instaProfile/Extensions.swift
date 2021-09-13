@@ -12,6 +12,12 @@ protocol CustomCell {
     static func idCell() -> String
 }
 
+extension CustomCell {
+    static func idCell() -> String {
+        return String(describing: self)
+    }
+}
+
 extension UICollectionViewCell {
     func nibName() -> UINib {
         return UINib(nibName: String(describing: self), bundle: nil)
@@ -19,9 +25,14 @@ extension UICollectionViewCell {
 }
 
 extension UICollectionView {
-    //func config(){}
     func registerCustomCell(cell: CustomCell.Type) {
         self.register(UINib(nibName: String(describing: cell), bundle: nil), forCellWithReuseIdentifier: cell.idCell())
+    }
+}
+
+extension UITableView {
+    func registerCustomCell(cell: CustomCell.Type) {
+        self.register(UINib(nibName: String(describing: cell), bundle: nil), forCellReuseIdentifier: cell.idCell())
     }
 }
 
