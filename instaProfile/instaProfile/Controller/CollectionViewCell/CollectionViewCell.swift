@@ -10,6 +10,10 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell, CustomCell {
     @IBOutlet weak var cellImage: UIImageView!
     
+    override func prepareForReuse() {
+        cellImage.image = nil
+    }
+    
     /// sets the image to the UIImageView outlet
     /// - Parameter image: image that will be assigned to the UIImageView outlet
     

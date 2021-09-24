@@ -12,39 +12,41 @@ class DetailPhotoTableViewCell: UITableViewCell, CustomCell {
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var imagePost: UIImageView!
-    @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var caption: UILabel!
     
+    var didChangeHeightCell: (() -> ())?
+    var showAlert: (() -> ())?
+    
     @IBAction func isPressedEditButton(_ sender: Any) {
+        showAlert?()
     }
-    @IBAction func isPressedCommentButton(_ sender: Any) {
+//    @IBAction func isPressedCommentButton(_ sender: Any) {
+//    }
+    
+    @objc func showComments(_ sender: UIButton) {
+        didChangeHeightCell?()
+        stackView.layoutIfNeeded()
     }
     
     private var comments: [String]?
     let identifier = "commentCell"
+    var onTableViewUpdate: (() -> ())?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        userAvatar.image = nil
+        userName.text = nil
+        imagePost.image = nil
+        stackView.arrangedSubviews.forEach {
+            stackView.removeArrangedSubview($0)
+        }
+        caption.text = nil
     }
     
-    func config(name: String, avatar: String, post: Post) {
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+    func config(userId: String, name: String, avatar: String, post: Post) {
         comments = post.comments
-        
+    
         userAvatar.image = UIImage(named: avatar)
         userAvatar.layer.cornerRadius = userAvatar.frame.width / 2
         userAvatar.clipsToBounds = true
@@ -53,38 +55,24 @@ class DetailPhotoTableViewCell: UITableViewCell, CustomCell {
         imagePost.image = UIImage(named: post.image)
         caption.text = post.caption
         
+
+        
         if let comments = post.comments {
-            if comments.count < 2 {
-                commentButton.isHidden = true
+            let visibleComments = comments.count < 2 || post.isExpanded == true ? comments.count : 2
+            
+            for i in 0 ..< visibleComments {
+                let view: CommentView = CommentView.fromNib()
+                view.configure(title: "RandomUser" + String(Int.random(in: 0...100)), subtitle: comments[i])
+                stackView.addArrangedSubview(view)
             }
-            //tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
-        } else {
-           tableView.isHidden = true
+            if comments.count > 2, !post.isExpanded {
+                let button = UIButton(type: .system)
+                button.setTitle("Показать все комментарии", for: .normal)
+                button.addTarget(self, action: #selector(showComments(_:)), for: .touchUpInside)
+                stackView.addArrangedSubview(button)
+            }
         }
     }
     
 }
 
-extension DetailPhotoTableViewCell : UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let commentsCount = comments?.count {
-            if commentsCount > 2 {
-                return 2
-            } else {
-                return commentsCount
-            }
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: identifier) {
-            cell.textLabel?.text = "RandomUser" + String(Int.random(in: 0...100))
-            cell.detailTextLabel?.text = comments?[indexPath.row]
-            return cell
-        }
-        return UITableViewCell()
-    }
-    
-    
-}

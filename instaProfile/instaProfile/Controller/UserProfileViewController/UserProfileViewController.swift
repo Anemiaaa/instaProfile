@@ -23,6 +23,7 @@ class UserProfileViewController: UIViewController {
     
     var user: User?
     var getCellData: ((_ indexPath: Int) -> UIImage)?
+    var updateCollectionView: (() -> ())?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +37,10 @@ class UserProfileViewController: UIViewController {
         collectionView.registerCustomCell(cell: CollectionViewCell.self)
     }
     
-    
     /// sets the value to the class variables
     
     private func setVariables() {
-        DataManager.shared.getUser(index: 0) { [weak self] user in
+        DataManager.shared.getUserAsync(index: 0) { [weak self] user in
             guard let self = self else { return }
             
             self.user = user
@@ -48,7 +48,7 @@ class UserProfileViewController: UIViewController {
             self.getCellData = { index in
                 var uiImageArray: [UIImage] = []
                     
-                user.publications.forEach({ post in
+                self.user?.publications.forEach({ post in
                     if let image = UIImage(named: post.image) {
                             uiImageArray.append(image)
                         }
@@ -58,6 +58,13 @@ class UserProfileViewController: UIViewController {
                     return uiImageArray[index]
                 }
                 return UIImage()
+            }
+            
+            self.updateCollectionView = {
+                if let posts = DataManager.shared.getUserPosts(userId: user.id) {
+                    self.user?.publications = posts
+                    self.collectionView.reloadData()
+                }
             }
         }
     }

@@ -17,16 +17,12 @@ struct User {
 }
 
 struct Post {
+    let id = UUID().uuidString
     var image: String
     var caption: String?
+    var isExpanded: Bool = false
     var likes: Int = 0
     var comments: [String]?
     let date: Date = Date()
 }
 
-//struct InfoToSend {
-//    var userName: String
-//    var userAvatar: String
-//    var indexPath: IndexPath
-//    var posts: [Post]
-//}
